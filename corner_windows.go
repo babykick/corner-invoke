@@ -8,6 +8,8 @@ import (
 	"os/exec"
 	"syscall"
 	"unsafe"
+
+	"github.com/go-vgo/robotgo"
 )
 
 const (
@@ -48,4 +50,8 @@ func LockScreen() {
 			log.Printf("lockScreen err:%v", err)
 		}
 	}
+}
+
+func HideAllWindows() {
+	robotgo.KeyTap("d", "cmd")
 }
