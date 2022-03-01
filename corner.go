@@ -11,12 +11,12 @@ import (
 var (
 	RIGHT_BOTTOM_X int16
 	RIGHT_BOTTOM_Y int16
-	RIGHT_TOP_X    int
-	RIGHT_TOP_Y    int
-	LEFT_BOTTOM_X  int
-	LEFT_BOTTOM_Y  int
-	LEFT_TOP_X     int = 0
-	LEFT_TOP_Y     int = 0
+	RIGHT_TOP_X    int16
+	RIGHT_TOP_Y    int16
+	LEFT_BOTTOM_X  int16
+	LEFT_BOTTOM_Y  int16
+	LEFT_TOP_X     int16 = 0
+	LEFT_TOP_Y     int16 = 0
 )
 
 func setup() {
