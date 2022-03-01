@@ -2,8 +2,9 @@ package main
 
 import (
 	"log"
-	"os/exec"
+	"time"
 
+	"github.com/go-vgo/robotgo"
 	hook "github.com/robotn/gohook"
 )
 
@@ -12,33 +13,30 @@ const (
 	RIGHT_BOTTOM_Y = 899
 )
 
-func lockScreen() {
-	if isLocked := ScreenIsLocked(); !isLocked {
-		cmd := exec.Command("rundll32.exe", "user32.dll,LockWorkStation")
-		err := cmd.Start()
-
-		if err != nil {
-			log.Printf("lockScreen err:%v", err)
-		}
-	}
+func setup() {
+	KillProcess("cornerinvoke")
 }
 
 func main() {
+	setup()
 	log.Println("press combo keys")
-	// robotgo.KeyTap("m", "alt", "command")
+
 	hook.Register(hook.MouseDown, nil, func(e hook.Event) {
-		log.Println(e)
+		if e.Button == 3 {
+			robotgo.KeyTap("d", "cmd")
+		}
 	})
 	s := hook.Start()
 	<-hook.Process(s)
-	// for {
-	// 	x, y := robotgo.GetMousePos()
 
-	// 	if x == RIGHT_BOTTOM_X && y == RIGHT_BOTTOM_Y {
-	// 		lockScreen()
-	// 		robotgo.Move(0, 0)
-	// 	}
-	// 	time.Sleep(200 * time.Millisecond)
-	// }
+	for {
+		x, y := robotgo.GetMousePos()
+
+		if x == RIGHT_BOTTOM_X && y == RIGHT_BOTTOM_Y {
+			LockScreen()
+			robotgo.Move(0, 0)
+		}
+		time.Sleep(200 * time.Millisecond)
+	}
 
 }

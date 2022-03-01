@@ -3,7 +3,16 @@
 
 package main
 
-import syscall
+import (
+	"log"
+	"os/exec"
+	"syscall"
+	"unsafe"
+)
+
+const (
+	DESKTOP_SWITCHDESKTOP = 0x0100 // The access to the desktop
+)
 
 func ScreenIsLocked() bool {
 
@@ -28,4 +37,15 @@ func ScreenIsLocked() bool {
 	syscall.Syscall(closeDesktop.Addr(), 1, r1, 0, 0)
 
 	return res != 1
+}
+
+func LockScreen() {
+	if isLocked := ScreenIsLocked(); !isLocked {
+		cmd := exec.Command("rundll32.exe", "user32.dll,LockWorkStation")
+		err := cmd.Start()
+
+		if err != nil {
+			log.Printf("lockScreen err:%v", err)
+		}
+	}
 }
