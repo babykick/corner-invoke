@@ -28,15 +28,24 @@ func setup() {
 
 func handleMouseDown() {
 	hook.Register(hook.MouseDown, nil, func(e hook.Event) {
+		log.Println(e)
 		if e.Button == 3 {
 			HideAllWindows()
 		}
 	})
+
+	hook.Register(hook.MouseWheel, nil, func(e hook.Event) {
+		log.Println(e)
+
+		HideAllWindows()
+
+	})
+
 }
 
 func handleMouseMove() {
 	hook.Register(hook.MouseMove, nil, func(e hook.Event) {
-		log.Println(e)
+		// log.Println(e)
 		if e.X == RIGHT_BOTTOM_X && e.Y == RIGHT_BOTTOM_Y {
 			LockScreen()
 			robotgo.Move(0, 0)
